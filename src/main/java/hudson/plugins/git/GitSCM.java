@@ -29,6 +29,7 @@ import hudson.plugins.git.extensions.impl.ChangelogToBranch;
 import hudson.plugins.git.extensions.impl.PathRestriction;
 import hudson.plugins.git.extensions.impl.LocalBranch;
 import hudson.plugins.git.extensions.impl.PreBuildMerge;
+import hudson.plugins.git.extensions.impl.PollExclusion;
 import hudson.plugins.git.opt.PreBuildMergeOptions;
 import hudson.plugins.git.util.Build;
 import hudson.plugins.git.util.*;
@@ -600,6 +601,12 @@ public class GitSCM extends GitSCMBackwardCompatibility {
     private PollingResult compareRemoteRevisionWithImpl(Job<?, ?> project, Launcher launcher, FilePath workspace, final @NonNull TaskListener listener) throws IOException, InterruptedException {
         // Poll for changes. Are there any unbuilt revisions that Hudson ought to build ?
 
+        if (getExtensions().get(PollExclusion.class) != null) {
+            for (UserRemoteConfig userRemoteConfig: userRemoteConfigs) {
+                    listener.getLogger().println("Polling disabled for " + userRemoteConfig.toString());
+            }
+            return NO_CHANGES;
+        }
         listener.getLogger().println("Using strategy: " + getBuildChooser().getDisplayName());
 
         final Run lastBuild = project.getLastBuild();
