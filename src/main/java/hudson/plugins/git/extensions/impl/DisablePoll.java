@@ -16,10 +16,10 @@ import hudson.plugins.git.util.BuildData;
  *
  * @author Amol
  */
-public class PollExclusion extends GitSCMExtension {
+public class DisablePoll extends GitSCMExtension {
 
     @DataBoundConstructor
-    public PollExclusion() {
+    public DisablePoll() {
     }
 
     @Override

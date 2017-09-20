@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Per Böhlin
  */
-public class PollExclusionTest extends GitSCMExtensionTest{
+public class DisablePollTest extends GitSCMExtensionTest{
 
 	FreeStyleProject project;
 	TestGitRepo repo;
@@ -27,7 +27,7 @@ public class PollExclusionTest extends GitSCMExtensionTest{
 
 	@Override
 	protected GitSCMExtension getExtension() {
-		return new PollExclusion();
+		return new DisablePoll();
 	}
 
 	@Test
